@@ -14,7 +14,9 @@ The highest rating course for introduction of OS must be *MIT 6.S081*, which des
 - [xv6-book 中文版 上课笔记和补充](https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081/)，属于必须得看的级别
 
 - [6.s081 website 2021 fall](https://pdos.csail.mit.edu/6.828/2021/schedule.html)
-- My solution to homeworks :https://github.com/GhostlikeVM/xv6-labs-2021
+- My solution to homeworks: Save locally, will be published after all labs finished
+  - Lab1: utils (Finished on 2/28)
+  - Lab2: syscall (Finished on 3/7)
 
 [*UCB CS162*](https://cs162.org/) is far more challenging. If you wanna overall understanding of OS, project Pintos will take you to build your own os.
 
