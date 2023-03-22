@@ -6,7 +6,7 @@
 */
 #pragma once
 
-#define SHDEBUG
+// #define SHDEBUG
 
 #define kMaxArgs 20
 #define kMaxTokenLen 64
