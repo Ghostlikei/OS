@@ -1,5 +1,22 @@
 #include "../include/exec.h"
 
+// #include <pthread.h>
+/**
+ * @note I maintain a fore ground process group for waiting function.
+ * fg_group[0] indicates the number of process
+ * fg_group[i] indicates the pid of fg process
+ * 
+*/
+static pid_t fg_group[kMaxProcess + 1];
+
+/**
+ * @note helper functions of fg
+ * We must ensure that making these operations are atomic
+*/
+// static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+static int add_fg(pid_t pid);
+static void wait_fg();
+
 /**
  * @note helper functions
 */
@@ -7,6 +24,7 @@ static void copy_argv(char* src[], char dest[][kMaxTokenLen], int cnt);
 static char **deep_copy(char argv[][kMaxTokenLen], int argc);
 static inline void run_node(cnode* head, int n);
 static inline void run_redir_node(cnode* list, int n);
+
 
 int pgetline(char* buf, int len) {
     printf("sh> ");   
@@ -119,6 +137,7 @@ cnode* parsecmd(char* buf) {
 }
 
 void eval(char* cmdline) {
+    // Init the pg_group with wht 
     // parsecmd into argc, argv and CmdType
     cnode* list = parsecmd(cmdline);
 
@@ -134,9 +153,6 @@ void eval(char* cmdline) {
 
     if (list->cmdline.argc == 1) { // No pipeline
         if (list->cmdline.type == Background) {
-#ifdef SHDEBUG
-            printf("SHDEBUG: Background: Running in background\n");
-#endif  
             signal(SIGCHLD, SIG_IGN);
             pid_t pid;
             if ((pid = fork()) == 0) {
@@ -144,7 +160,6 @@ void eval(char* cmdline) {
                 dup2(fd, STDIN_FILENO);
                 dup2(fd, STDOUT_FILENO);
                 dup2(fd, STDERR_FILENO);
-                
                 close(fd); 
 
                 run_node(list, 1);
@@ -155,11 +170,12 @@ void eval(char* cmdline) {
         } else if (list->cmdline.type == Redir) {
             run_redir_node(list, 1);
         } else {
-            pid_t pid;
-            if ((pid = fork()) == 0) {
+            pid_t pid = fork();
+            add_fg(pid);
+            if (pid == 0) {
                 run_node(list, 1);
             } else {
-                wait(0);
+                wait_fg();
             }
         }
     } else {
@@ -194,6 +210,7 @@ void run_pipeline(cnode* head, int number) {
     for (int i = 0; i < number; i++) {
         pipe(fd[i]);
         pid_t pid = fork();
+        add_fg(pid);
         if (pid == 0) {
             if (i == 0) { // The first program
                 dup2(fd[i][1], STDOUT_FILENO);
@@ -207,15 +224,17 @@ void run_pipeline(cnode* head, int number) {
                 run_node(head, i + 1);
             }
             exit(0);
+        } else {
+            close(fd[i][1]);
         }
-        close(fd[i][1]);
     }
     for (int i = 0; i < number; i++) {
         close(fd[i][0]);
     }
-    for (int i = 0; i < number; i++) {
-        wait(NULL);
-    }
+    // for (int i = 0; i < number; i++) {
+    //     wait(NULL);
+    // }
+    wait_fg();
 }
 
 void pchdir(char* buf) {
@@ -255,8 +274,9 @@ static inline void run_node(cnode* head, int n) {
 }
 
 static inline void run_redir_node(cnode* list, int n) {
-    pid_t pid;
-    if ((pid = fork()) == 0) {
+    pid_t pid = fork();
+    add_fg(pid);
+    if (pid == 0) {
         if (!strcmp(list->cmdline.argv[0], "<")) {
             int fd = open(list->cmdline.argv[1], O_RDONLY);
             if (fd < 0) {
@@ -295,6 +315,34 @@ static inline void run_redir_node(cnode* list, int n) {
         run_node(list, n);
         exit(1);
     } else {
-        wait(0);
+        // wait(0);
+        wait_fg();
     }
+}
+
+static int add_fg(pid_t pid) {
+    // pthread_mutex_lock(&mutex);
+
+    if (fg_group[0] > kMaxProcess - 1) {
+        fprintf(stderr, "TOO MANY FORGOURND PROCESS");
+        // pthread_mutex_unlock(&mutex);
+        return -1;
+    }
+    (fg_group[0])++;
+    fg_group[fg_group[0]] = pid;
+
+    // pthread_mutex_unlock(&mutex);
+
+    return 0;
+}
+
+static void wait_fg() {
+    // pthread_mutex_lock(&mutex);
+    int fg_num = fg_group[0];
+    for(int i = 1; i <= fg_num; i++) {
+        waitpid(fg_group[i], NULL, 0);
+        fg_group[i] = 0;
+        (fg_group[0])--;
+    }
+    // pthread_mutex_unlock(&mutex);
 }
