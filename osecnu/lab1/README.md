@@ -24,7 +24,7 @@ My code should be organized with `Makefile`,
 To build this project on minix(or other unix platform, whether x86 or arm), type:
 
 ```
-> make myshell
+> make mshell
 ```
 
 To run shell, you need to type:
