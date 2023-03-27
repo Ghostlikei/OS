@@ -62,5 +62,6 @@ void pchdir(char* buf);
 
 /**
  * @note if command == "exit", we need to terminate the main process
+ * @deprecated has not been used before.
 */
 void pexit() __attribute__((noreturn));

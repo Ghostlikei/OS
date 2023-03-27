@@ -6,12 +6,15 @@
 */
 #pragma once
 
+/**
+ * @note Like zsh and bash, we create a ./history file to record cmdline
+ * It will be created at lab1/.sh_history, can be modified at def.h
+*/
+
 #include <stdio.h>
 #include "def.h"
 
 /**
- * @note Like zsh and bash, we create a ./history file to record cmdline
- * It will be created at lab1/.sh_history,
  * @param int n: list number of previous n command 
  * @return -1: error
  * @return 0: success

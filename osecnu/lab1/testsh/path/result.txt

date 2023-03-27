@@ -1,9 +1,0 @@
-runcmd: argv[0]: ls
-runcmd: argv[1]: -a
-runcmd: argv[2]: -l
-runcmd: stdin: 0, stdout: 1
-total 8
-drwxr-xr-x  3 shenqingyun  staff  96 Mar 22 19:50 .
-drwxr-xr-x  3 shenqingyun  staff  96 Mar 22 19:50 ..
--rw-r--r--  1 shenqingyun  staff  88 Mar 22 19:50 result.txt
-

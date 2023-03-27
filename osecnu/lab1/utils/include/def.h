@@ -11,6 +11,9 @@
 #define kMaxTokens 1024
 #define kMaxHistory 256
 
+/**
+ * @note macros for mytop
+*/
 #define kMaxProcess 512
 #define kMaxProcessTop 32
 

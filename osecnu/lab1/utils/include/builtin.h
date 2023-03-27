@@ -19,7 +19,7 @@
  * @note judge whether cmd matchs "history", "mytop", "exit"
  * @param char* indicates the command
  * @return 0: not a builtin_command
- * @return 1: exit
+ * @return 1: exit (deprecated?)
  * @return 2: mytop
  * @return 3: history
 */

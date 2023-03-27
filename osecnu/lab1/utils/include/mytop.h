@@ -30,7 +30,7 @@
 
 #include "def.h"
 
-#undef __aarch64__ // used for writing code
+// #undef __aarch64__ // used for writing code
 
 typedef struct imeminfo {
     unsigned long pagesize;

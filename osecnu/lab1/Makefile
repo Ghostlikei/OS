@@ -10,7 +10,7 @@ all: main
 main: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-# This is used for minix
+# This is used for minix (whose 'make' can not use wildcard)
 mshell:
 	$(CC) $(CFLAGS) -c -o ./utils/src/exec.o ./utils/src/exec.c
 	$(CC) $(CFLAGS) -c -o ./utils/src/history.o ./utils/src/history.c
@@ -24,7 +24,7 @@ mshell:
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 debug: CFLAGS+=-DSHDEBUG
-debug: main
+debug: mshell
 
 clean:
 	rm -f $(OBJS) main

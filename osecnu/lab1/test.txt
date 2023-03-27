@@ -1,4 +1,0 @@
-runcmd: argv[0]: echo
-runcmd: argv[1]: a
-runcmd: stdin: 0, stdout: 1
-a
