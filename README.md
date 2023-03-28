@@ -18,6 +18,7 @@ The highest rating course for introduction of OS must be *MIT 6.S081*, which des
   - Lab1: utils (Finished on 2/28)
   - Lab2: syscall (Finished on 3/7)
   - Lab3: page table (Finished on 3/15)
+  - Lab4: Traps (Finished on 3/28)
 
 [*UCB CS162*](https://cs162.org/) is far more challenging. If you wanna overall understanding of OS, project Pintos will take you to build your own os.
 
