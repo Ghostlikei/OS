@@ -19,6 +19,7 @@ The highest rating course for introduction of OS must be *MIT 6.S081*, which des
   - Lab2: syscall (Finished on 3/7)
   - Lab3: page table (Finished on 3/15)
   - Lab4: Traps (Finished on 3/28)
+  - Lab5: Copy-On-Write Fork (Finished on 4/4)
 
 [*UCB CS162*](https://cs162.org/) is far more challenging. If you wanna overall understanding of OS, project Pintos will take you to build your own os.
 
@@ -27,3 +28,15 @@ The highest rating course for introduction of OS must be *MIT 6.S081*, which des
 Also, there are lots of outstanding courses and reference books to learn OS. Such as:
 
 *OSTEP(Operation System: Three easy pieces)*. 
+
+### Idea
+
+Due to the outdated minix lab (which we need to do on osecnu), I planned to reinterpret the labs on xv6 and design the similar codes, but workload maybe large.
+
+- What we need to do on minix?
+  - Lab1 shell (Finished)
+  - Lab2 implement EDF on MLFQ (Ongoing)
+  - Lab3 I/O (unknown)
+  - Lab4 Memory management? (unknown)
+
+I will try my best to do so, but it may be put on another repo. I haven't decided yet.
