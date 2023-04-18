@@ -263,6 +263,8 @@
 
 #  define SYS_PADCONF (KERNEL_CALL + 57)	/* sys_padconf() */
 
+#  define SYS_CHRT (KERNEL_CALL + 58)
+
 /* Total */
 #define NR_SYS_CALLS	58	/* number of kernel calls */
 

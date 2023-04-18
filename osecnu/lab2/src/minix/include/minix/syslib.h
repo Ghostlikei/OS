@@ -277,3 +277,4 @@ int copyfd(endpoint_t endpt, int fd, int what);
 
 #endif /* _SYSLIB_H */
 
+int sys_chrt(endpoint_t proc_ep, long deadline);

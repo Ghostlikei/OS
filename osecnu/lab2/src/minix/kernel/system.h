@@ -32,6 +32,11 @@
 
 #include "kernel/kernel.h"
 
+int do_chrt(struct proc * caller, message *m_ptr);
+#if ! USE_CHRT
+#define do_chrt NULL
+#endif
+
 int do_exec(struct proc * caller, message *m_ptr);
 #if ! USE_EXEC
 #define do_exec NULL

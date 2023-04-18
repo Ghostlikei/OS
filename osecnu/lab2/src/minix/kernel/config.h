@@ -45,6 +45,7 @@
 #define USE_RUNCTL         1	/* control stop flags of a process */
 #define USE_STATECTL       1	/* let a process control its state */
 #define USE_MCONTEXT       1	/* enable getting/setting of machine context */
+#define USE_CHRT           1
 
 #if defined(__arm__)
 #define USE_PADCONF        1	/* configure pinmux */

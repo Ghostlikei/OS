@@ -190,6 +190,7 @@ void system_init(void)
   }
 
   /* Process management. */
+  map(SYS_CHRT, do_chrt);
   map(SYS_FORK, do_fork); 		/* a process forked a new process */
   map(SYS_EXEC, do_exec);		/* update process after execute */
   map(SYS_CLEAR, do_clear);		/* clean up after process exit */

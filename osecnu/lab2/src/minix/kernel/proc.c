@@ -1535,6 +1535,10 @@ void enqueue(
  * This function can be used x-cpu as it always uses the queues of the cpu the
  * process is assigned to.
  */
+  if (rp->p_ddl >= 0) {
+	rp->p_priority = 6;
+  }
+
   int q = rp->p_priority;	 		/* scheduling queue to use */
   struct proc **rdy_head, **rdy_tail;
   
@@ -1600,6 +1604,10 @@ void enqueue(
  */
 static void enqueue_head(struct proc *rp)
 {
+  if (rp->p_ddl>=0) {
+    rp->p_priority = 6;
+  }
+  
   const int q = rp->p_priority;	 		/* scheduling queue to use */
 
   struct proc **rdy_head, **rdy_tail;
@@ -1719,7 +1727,7 @@ static struct proc * pick_proc(void)
  *
  * This function always uses the run queues of the local cpu!
  */
-  register struct proc *rp;			/* process to run */
+  register struct proc *rp, *nextp;			/* process to run */
   struct proc **rdy_head;
   int q;				/* iterate over queues */
 
@@ -1734,9 +1742,23 @@ static struct proc * pick_proc(void)
 		continue;
 	}
 	assert(proc_is_runnable(rp));
-	if (priv(rp)->s_flags & BILLABLE)	 	
+    if(q == 6){
+        rp = rdy_head[q];
+        nextp = rp->p_nextready;
+        while (nextp) {
+            if(nextp->p_ddl > 0){
+                if(nextp->p_ddl < rp->p_ddl){
+                    if (proc_is_runnable(nextp)){
+                        rp = nextp;
+                    }
+                }
+            }
+            nextp = nextp->p_nextready;
+        }
+        if (priv(rp)->s_flags & BILLABLE)	 	
 		get_cpulocal_var(bill_ptr) = rp; /* bill for system time */
-	return rp;
+	    return rp;
+    }
   }
   return NULL;
 }
