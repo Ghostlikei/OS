@@ -266,7 +266,7 @@
 #  define SYS_CHRT (KERNEL_CALL + 58)
 
 /* Total */
-#define NR_SYS_CALLS	58	/* number of kernel calls */
+#define NR_SYS_CALLS	59	/* number of kernel calls */
 
 #define SYS_CALL_MASK_SIZE BITMAP_CHUNKS(NR_SYS_CALLS)
 
