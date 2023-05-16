@@ -43,7 +43,7 @@ void init_file(int file_size, const char* filepath) {
 
 void write_file(int block_size, 
                 int is_rand, 
-                const char* w_file_path, 
+                const char* w_file_path,
                 int repeat) {
     // Open the file with proper flags
     int flags = O_WRONLY | O_SYNC;
@@ -66,9 +66,8 @@ void write_file(int block_size,
     }
     memset(buffer, 7, block_size); // Fill the temp buffer with junks
     
-    printf("Write file (%s): is_random(%d), blocksize(%d)\n", w_file_path, is_rand, block_size);
+    // printf("Write file (%s): is_random(%d), blocksize(%d)\n", w_file_path, is_rand, block_size);
 
-    // Repeatedly writing into the file with random mode or not
     for (int i = 0; i < repeat; i++) {
         // Prepare offsets
         off_t offset = is_rand ? random() % max_offset : 0;
@@ -109,10 +108,11 @@ void write_file(int block_size,
         // After writing, byte written is supposed be the same as block_size
         assert(bytesWritten == block_size);
     }
+    
 
     free(buffer);
     close(fd);
-    printf("Write file (%s): is_random(%d), blocksize(%d) ENDED\n", w_file_path, is_rand, block_size);
+    // printf("Write file (%s): is_random(%d), blocksize(%d) ENDED\n", w_file_path, is_rand, block_size);
 }
 
 int main() {
@@ -125,9 +125,8 @@ int main() {
     clock_t t3 = clock();
 
     double executionTime1 = (double) (t2 - t1) / CLOCKS_PER_SEC;
-
     double executionTime2 = (double) (t3 - t2) / CLOCKS_PER_SEC;
 
-    printf("Seq write time: %lfs\n", executionTime1);
-    printf("Rand write time: %lfs\n", executionTime2);
+    printf("Rand write time: %lfs\n", executionTime1);
+    printf("Seq write time: %lfs\n", executionTime2);
 }

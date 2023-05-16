@@ -22,7 +22,7 @@
 /**
  * @brief params of the whole test
 */
-#define REPEAT           100    // repeat times of read/write
+#define REPEAT           10000    // repeat times of read/write
 #define FILE_INIT_SIZE   256   // Init size(MB) of testing files
 
 const int kTestBlockSizes[6] = {64, 256, 1 << 10, 4 << 10, 16 << 10, 64 << 10}; 

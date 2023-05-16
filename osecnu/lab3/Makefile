@@ -1,5 +1,5 @@
 CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra
 
 .PHONY: all buildram test clean
 
@@ -7,7 +7,7 @@ all: buildram test
 
 buildram: buildmyram
 
-test: test
+minix_test: test
 
 buildmyram: buildmyram.c
 	$(CC) $(CFLAGS) -o buildmyram buildmyram.c
